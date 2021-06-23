@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- mapper가 여러개 일때 namespace 로 구분한다. -->
+<mapper namespace="shop">
+	<select id="list" parameterType="String" resultType="com.ict.db.VO">
+		select * from shop_t where category = #{category}
+	</select>	
+	
+	<select id="onelist" parameterType="String" resultType="com.ict.db.VO">
+		select * from shop_t where idx = #{idx}
+	</select>
+	
+	<select id="login" parameterType="com.ict.db.MVO" resultType="com.ict.db.MVO">
+		select * from members where id = #{id} and pw=#{pw}
+	</select>
+	
+	<select id="cartSearch" parameterType="com.ict.db.CVO" resultType="com.ict.db.CVO">
+		select * from cart where id = #{id} and p_num = #{p_num}
+	</select>
+	
+	<insert id="cartInsert" parameterType="com.ict.db.CVO">
+		insert into cart values(cart_seq.nextval,#{p_num},#{p_name},#{p_price},
+				#{p_saleprice},#{amount},#{id})
+	</insert>
+	
+	<update id="cartUpdate" parameterType="com.ict.db.CVO">
+		update cart set amount = amount + 1 where id = #{id} and p_num = #{p_num}
+	</update>
+	
+	<select id="cartList" parameterType="String" resultType="com.ict.db.CVO">
+		select * from cart where id = #{id}
+	</select>
+	
+	<delete id="cartDelete" parameterType="com.ict.db.CVO">
+		delete from cart where id = #{id} and p_num = #{p_num}
+	</delete>
+	
+	<update id="cartAmountUpdate" parameterType="com.ict.db.CVO">
+		update cart set amount = #{amount} where id = #{id} and p_num = #{p_num}
+	</update>
+</mapper>
+
+
+
+
+
+
+
